@@ -1,3 +1,18 @@
+<style>
+body {
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+}
+h1, h2, h3 {
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+pre {
+  margin: 2em 0;
+  padding: 1.2em;
+}
+</style>
+
 # 线性代数中的线性方程组
 
 ## 1.1 线性方程组
