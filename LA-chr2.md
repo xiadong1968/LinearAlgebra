@@ -267,3 +267,226 @@ l. \( A^T \) 是可逆矩阵。
 
 #### 潜在问题  
 - 如习题49-53所示，**高条件数**的矩阵在计算中可能导致显著误差（如解的不稳定性或错误结果）。 
+
+## 2.4 分块矩阵
+
+&emsp;&emsp;我们可以把矩阵看作一组列向量，而非仅仅是一个数的矩形表。这种观点非常有用，因此，我们希望考虑 \( A \) 的其他分块，把它用水平线和竖直线分成几块，如下面例1所示。分块矩阵也出现在线性代数的现代应用中，因为这些记号简化了许多讨论，并使矩阵分析中许多本质的结构显露出来，如本章关于飞机设计的介绍性示例所示。本节提供一个复习矩阵代数和使用可逆矩阵定理的机会。
+
+**例 1** 矩阵  
+
+$
+A = \begin{bmatrix}
+3 & 0 & -1 & \mid & 5 & 9 &\mid & -2 \\
+-5 & 2 & 4 & \mid & 0 & -3 &\mid & 1 \\
+\hline -8 & -6 & 3 & \mid & 1 & 7 &\mid &-4
+\end{bmatrix}
+$  
+
+也可写成 \(2 \times 3\) 分块矩阵  
+
+\[
+A = \begin{bmatrix}
+A_{11} & A_{12} & A_{13} \\
+A_{21} & A_{22} & A_{23}
+\end{bmatrix}
+\]  
+
+它的元素是分块（或子矩阵）  
+
+\[
+A_{11} = \begin{bmatrix}
+3 & 0 & -1 \\
+-5 & 2 & 4 
+\end{bmatrix}, \quad 
+A_{12} = \begin{bmatrix}
+5 & 9 \\
+0 & -3
+\end{bmatrix}, \quad 
+A_{13} = \begin{bmatrix}
+-2 \\
+1
+\end{bmatrix}
+\]  
+
+\[
+A_{21} = \begin{bmatrix} -8 & -6 & 3 \end{bmatrix}, \quad 
+A_{22} = \begin{bmatrix} 1 & 7 \end{bmatrix}, \quad 
+A_{23} = \begin{bmatrix} -4 \end{bmatrix}
+\]  
+
+### 加法与标量乘法
+
+&emsp;&emsp;若矩阵 \( A \) 与 \( B \) 有相同维数且以同样方式分块，则自然有矩阵的和 \( A + B \) 也以同样方式分块。这时 \( A + B \) 的每一块恰好是 \( A \) 和 \( B \) 对应分块的（矩阵）和。分块矩阵乘以一个数也可以逐块计算。
+
+### 分块矩阵的乘法
+
+&emsp;&emsp;分块矩阵也可用通常的行列法则进行乘法运算，就如每一块都是数一样。对于乘积 \( AB \)，只要 \( A \) 的列的分法与 \( B \) 的行的分法一致。
+
+**例 3**
+
+设分块矩阵：
+
+$A = \begin{bmatrix} 2 & -3 & 1 &\mid & 0 & -4 \\ 1 & 5 & -2 &\mid & 3 & -1 \\ \hline 0 & -4 & -2 &\mid & 7 & -1 \end{bmatrix} = \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix}$
+
+其中：
+$A_{11} = \begin{bmatrix} 2 & -3 & 1 \\ 1 & 5 & -2 \end{bmatrix}$, 
+$A_{12} = \begin{bmatrix} 0 & -4 \\ 3 & -1 \end{bmatrix}$,
+$A_{21} = \begin{bmatrix} 0 & -4 & -2 \end{bmatrix}$,
+$A_{22} = \begin{bmatrix} 7 & -1 \end{bmatrix}$
+
+$B = \begin{bmatrix} 6 & 4 \\ -2 & 1 \\ -3 & 7 \\ \hline -1 & 3 \\ 5 & 2 \end{bmatrix} = \begin{bmatrix} B_1 \\ B_2 \end{bmatrix}$
+
+其中：
+$B_1 = \begin{bmatrix} 6 & 4 \\ -2 & 1 \\ -3 & 7 \end{bmatrix}$,
+$B_2 = \begin{bmatrix} -1 & 3 \\ 5 & 2 \end{bmatrix}$
+
+#### 解
+
+矩阵 $A$ 的5列被分成3列和2列两组，$B$ 的5行也按相同方式分块（3行和2行）。乘积 $AB$ 可表示为：
+
+$AB = \begin{bmatrix} A_{11}B_1 + A_{12}B_2 \\ A_{21}B_1 + A_{22}B_2 \end{bmatrix} = \begin{bmatrix} -5 & 4 \\ -6 & 2 \\ \hline 2 & 1 \end{bmatrix}$
+
+#### 计算过程
+
+1. **计算 $A_{11}B_1 + A_{12}B_2$**:
+   $A_{11}B_1 = \begin{bmatrix} 2 & -3 & 1 \\ 1 & 5 & -2 \end{bmatrix} \begin{bmatrix} 6 & 4 \\ -2 & 1 \\ -3 & 7 \end{bmatrix} = \begin{bmatrix} 15 & 12 \\ 2 & -5 \end{bmatrix}$
+   
+   $A_{12}B_2 = \begin{bmatrix} 0 & -4 \\ 3 & -1 \end{bmatrix} \begin{bmatrix} -1 & 3 \\ 5 & 2 \end{bmatrix} = \begin{bmatrix} -20 & -8 \\ -8 & 7 \end{bmatrix}$
+   
+   $A_{11}B_1 + A_{12}B_2 = \begin{bmatrix} 15 & 12 \\ 2 & -5 \end{bmatrix} + \begin{bmatrix} -20 & -8 \\ -8 & 7 \end{bmatrix} = \begin{bmatrix} -5 & 4 \\ -6 & 2 \end{bmatrix}$
+
+2. **计算 $A_{21}B_1 + A_{22}B_2$**:
+   $A_{21}B_1 = \begin{bmatrix} 0 & -4 & -2 \end{bmatrix} \begin{bmatrix} 6 & 4 \\ -2 & 1 \\ -3 & 7 \end{bmatrix} = \begin{bmatrix} 14 & -18 \end{bmatrix}$
+   
+   $A_{22}B_2 = \begin{bmatrix} 7 & -1 \end{bmatrix} \begin{bmatrix} -1 & 3 \\ 5 & 2 \end{bmatrix} = \begin{bmatrix} -12 & 19 \end{bmatrix}$
+   
+   $A_{21}B_1 + A_{22}B_2 = \begin{bmatrix} 14 & -18 \end{bmatrix} + \begin{bmatrix} -12 & 19 \end{bmatrix} = \begin{bmatrix} 2 & 1 \end{bmatrix}$
+
+#### 结果
+
+最终乘积矩阵为：
+$AB = \begin{bmatrix} -5 & 4 \\ -6 & 2 \\ 2 & 1 \end{bmatrix}$
+
+### 分块矩阵乘法的行列法则
+
+分块矩阵乘法的行列法则给出了两个矩阵乘积的最一般观点。以下是矩阵乘积的几种观点：
+1. 使用 $A$ 的列来给出 $Ax$ 的定义
+2. $AB$ 的列的定义
+3. 计算 $AB$ 的行列法则
+4. $A$ 的行与矩阵 $B$ 的乘积作为 $AB$ 的行
+
+下面的定理10应用分块思想给出了 $AB$ 的第5种观点。
+
+**例4**
+设 $A = \begin{bmatrix} -3 & 1 & 2 \\ 1 & -4 & 5 \end{bmatrix}$ 和 $B = \begin{bmatrix} a & b \\ c & d \\ e & f \end{bmatrix}$。验证：
+
+$$AB = \text{col}_1(A)\text{row}_1(B) + \text{col}_2(A)\text{row}_2(B) + \text{col}_3(A)\text{row}_3(B)$$
+
+**解**：
+每一项都是外积，计算如下：
+
+$$
+\text{col}_1(A)\text{row}_1(B) = \begin{bmatrix} -3 \\ 1 \end{bmatrix} \begin{bmatrix} a & b \end{bmatrix} = \begin{bmatrix} -3a & -3b \\ a & b \end{bmatrix}
+$$
+
+$$
+\text{col}_2(A)\text{row}_2(B) = \begin{bmatrix} 1 \\ -4 \end{bmatrix} \begin{bmatrix} c & d \end{bmatrix} = \begin{bmatrix} c & d \\ -4c & -4d \end{bmatrix}
+$$
+
+$$
+\text{col}_3(A)\text{row}_3(B) = \begin{bmatrix} 2 \\ 5 \end{bmatrix} \begin{bmatrix} e & f \end{bmatrix} = \begin{bmatrix} 2e & 2f \\ 5e & 5f \end{bmatrix}
+$$
+
+于是：
+
+$$
+\sum_{k=1}^3 \text{col}_k(A)\text{row}_k(B) = \begin{bmatrix} -3a+c+2e & -3b+d+2f \\ a-4c+5e & b-4d+5f \end{bmatrix} = AB
+$$
+
+注意 $AB$ 的每个元素是三个外积对应位置元素之和。
+
+### 定理10 （$AB$ 的列行展开）
+若 $A$ 是 $m \times n$ 矩阵，$B$ 是 $n \times p$ 矩阵，则：
+
+$$
+AB = [\text{col}_1(A) \quad \text{col}_2(A) \quad \cdots \quad \text{col}_n(A)] \begin{bmatrix} \text{row}_1(B) \\ \text{row}_2(B) \\ \vdots \\ \text{row}_n(B) \end{bmatrix} \tag{1}
+$$
+
+$$
+= \text{col}_1(A)\text{row}_1(B) + \text{col}_2(A)\text{row}_2(B) + \cdots + \text{col}_n(A)\text{row}_n(B)
+$$
+
+**证明**：
+对每个行指标 $i$ 和列指标 $j$，乘积 $\text{col}_k(A)\text{row}_k(B)$ 的 $(i,j)$ 元素是 $a_{ik}b_{kj}$。因此在(1)式的和中，$(i,j)$ 元素为：
+
+$$
+\begin{align*}
+&a_{i1}b_{1j} & &(k = 1)\\
++&a_{i2}b_{2j} & &(k = 2)\\
++&\cdots\\
++&a_{in}b_{nj} & &(k = n)
+\end{align*}
+$$
+
+根据行列法则，该和恰好是 $AB$ 的 $(i,j)$ 元素。
+
+### 分块矩阵的逆
+
+下例说明分块矩阵的逆的求法。
+
+**例5** &emsp;&emsp;形如 $A = \begin{bmatrix} A_{11} & A_{12} \\ 0 & A_{22} \end{bmatrix}$ 的矩阵称为**分块上三角矩阵**。设 $A_{11}$ 是 $p \times p$ 矩阵，$A_{22}$ 是 $q \times q$ 矩阵，且 $A$ 为可逆矩阵。求 $A^{-1}$ 的表达式。
+
+**解** &emsp;&emsp;用 $B$ 表示 $A^{-1}$ 且分块为 $B = \begin{bmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{bmatrix}$，满足：
+
+$$
+\begin{bmatrix} 
+A_{11} & A_{12} \\ 
+0 & A_{22} 
+\end{bmatrix}
+\begin{bmatrix} 
+B_{11} & B_{12} \\ 
+B_{21} & B_{22} 
+\end{bmatrix}
+= \ 
+\begin{bmatrix} 
+I_p & 0 \\ 
+0 & I_q 
+\end{bmatrix}
+\quad (2)
+$$
+
+展开矩阵乘法，得到方程组：
+1. $A_{11}B_{11} + A_{12}B_{21} = I_p \quad (3)$    
+2. $A_{11}B_{12} + A_{12}B_{22} = 0 \quad (4)$
+3. $A_{22}B_{21} = 0 \quad (5)$
+4. $A_{22}B_{22} = I_q \quad (6)$
+
+**求解步骤**：
+1. 由 (6) 式、可逆矩阵定理及$A_{22}$是方阵的事实，可以断定 $A_{22}$ 可逆，且 $B_{22} = A_{22}^{-1}$。  
+2. 由 (5) 式得 $B_{21} = A_{22}^{-1}0 = 0$。  
+3. 将$B_{21} = 0$代入 (3) 式得 $A_{11}B_{11} = I_p$，故 $B_{11} = A_{11}^{-1}$。  
+4. 由 (4) 式得 $B_{12} = -A_{11}^{-1}A_{12}A_{22}^{-1}$。  
+
+**最终结果**：
+$$
+A^{-1} = 
+\begin{bmatrix} 
+A_{11}^{-1} & -A_{11}^{-1}A_{12}A_{22}^{-1} \\ 
+0 & A_{22}^{-1} 
+\end{bmatrix}
+$$
+
+&emsp;&emsp;**分块对角矩阵**是一个分块矩阵，除主对角块外, 其余全是零分块。可逆的充要条件是主对角块均可逆。
+
+---
+
+### 数值计算的注解
+
+1. **内存管理**：  
+   当矩阵过大时，分块处理允许计算机分批次计算子矩阵。例如，某线性规划问题将矩阵分为837行×51列，在Cray超级计算机上耗时约4分钟。
+
+2. **高效运算**：  
+   支持向量传输技术的高速计算机对分块矩阵的运算效率更高。
+
+3. **专业软件**：  
+   高性能计算库LAPACK广泛使用分块矩阵算法，习题中展示了典型应用场景的计算方法。
